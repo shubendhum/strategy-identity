@@ -28,8 +28,8 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/nginx:alpine AS production
 # Copy built files from builder stage
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration from builder (since context is ./frontend)
+COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
