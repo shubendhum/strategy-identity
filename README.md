@@ -127,7 +127,7 @@ kubectl apply -f k8s/deployment.artifactory.yaml -n identity-strategy
 | Setting | Value |
 |---------|-------|
 | Docker Registry | `artifactory.devtools.syd.c1.macquarie.com:9956` |
-| NPM Registry | `artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases` |
+| NPM Registry | `artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual` |
 | Base Image | `node:18-alpine` |
 | Production Image | `nginx:alpine` |
 
