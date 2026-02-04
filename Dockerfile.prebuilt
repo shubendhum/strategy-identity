@@ -1,0 +1,21 @@
+# Production stage only - requires pre-built /build folder
+# Build locally first: yarn build
+# Then copy the /build folder to Docker
+
+FROM artifactory.devtools.syd.c1.macquarie.com:9956/nginx:alpine
+
+# Copy pre-built static files (build locally first with: yarn build)
+COPY build/ /usr/share/nginx/html/
+
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD wget -q --spider http://localhost/health || exit 1
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
