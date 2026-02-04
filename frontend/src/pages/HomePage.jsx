@@ -4,21 +4,38 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { PageHeader } from '@/components/PageHeader';
 import { Section, SectionHeader, DiagramContainer } from '@/components/Section';
-import { FeatureCard, StatCard } from '@/components/Cards';
+import { FeatureCard } from '@/components/Cards';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { getAllPages } from '@/config/pages';
 import { 
   Shield, 
   Zap, 
   TrendingDown, 
   ArrowRight, 
-  CheckCircle2,
-  Lock,
-  Globe,
-  Code2
+  FileText,
+  AlertTriangle,
+  RefreshCcw,
+  Briefcase,
+  Target
 } from 'lucide-react';
 
+// Icon mapping for dynamic rendering
+const iconMap = {
+  Shield,
+  Zap,
+  TrendingDown,
+  FileText,
+  AlertTriangle,
+  RefreshCcw,
+  Briefcase,
+  Target,
+};
+
 const HomePage = () => {
+  // Get all pages except overview for navigation cards
+  const contentPages = getAllPages().filter(p => p.path !== '/');
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -92,7 +109,7 @@ const HomePage = () => {
           </div>
         </Section>
 
-        {/* Quick Navigation */}
+        {/* Dynamic Navigation Cards */}
         <Section variant="muted">
           <SectionHeader
             subtitle="Explore the Strategy"
@@ -101,74 +118,36 @@ const HomePage = () => {
             align="center"
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <Card className="group hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="icon-container mb-4">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Why Change</h3>
-                <p className="text-muted-foreground mb-6 flex-1">
-                  Understand the current challenges and why transformation is needed now.
-                </p>
-                <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Link to="/why-change" className="flex items-center gap-2">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="group hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="icon-container mb-4">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">What Is Changing</h3>
-                <p className="text-muted-foreground mb-6 flex-1">
-                  See how we&apos;re repositioning identity from back-office to business enabler.
-                </p>
-                <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Link to="/what-is-changing" className="flex items-center gap-2">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="group hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="icon-container mb-4">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Security Posture</h3>
-                <p className="text-muted-foreground mb-6 flex-1">
-                  Discover how the strategy strengthens our overall security posture.
-                </p>
-                <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Link to="/security" className="flex items-center gap-2">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="group hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="icon-container mb-4">
-                  <Code2 className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Business Experience</h3>
-                <p className="text-muted-foreground mb-6 flex-1">
-                  Learn how this improves the day-to-day experience for teams.
-                </p>
-                <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Link to="/business" className="flex items-center gap-2">
-                    Learn More <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {contentPages.map((page, index) => {
+              const IconComponent = iconMap[page.icon] || FileText;
+              return (
+                <Card 
+                  key={page.id} 
+                  className="group hover:border-primary/30 transition-all duration-300 hover:shadow-lg animate-fade-in-up"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <div className="icon-container mb-4">
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">{page.navLabel}</h3>
+                    <p className="text-sm text-muted-foreground mb-6 flex-1 line-clamp-2">
+                      {page.description}
+                    </p>
+                    <Button 
+                      asChild 
+                      variant="outline" 
+                      className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    >
+                      <Link to={page.path || `/pages/${page.id}`} className="flex items-center gap-2">
+                        Learn More <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </Section>
 
@@ -179,15 +158,15 @@ const HomePage = () => {
               Ready to Learn More?
             </h2>
             <p className="text-muted-foreground mb-8">
-              Explore the full identity strategy documentation to understand 
-              the changes and how they impact your teams.
+              Start with the Executive Summary for a high-level overview, 
+              or dive into specific topics that interest you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-                <Link to="/why-change">Start with Why Change</Link>
+                <Link to="/pages/executive-summary">Read Executive Summary</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/security">View Security Benefits</Link>
+                <Link to="/pages/why-change">Start with Why Change</Link>
               </Button>
             </div>
           </div>
