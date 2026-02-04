@@ -15,6 +15,9 @@ RUN yarn install --frozen-lockfile
 # Copy source files
 COPY . .
 
+# Copy markdown content to public folder for dynamic loading
+RUN mkdir -p public/content && cp src/content/*.md public/content/
+
 # Build the application
 RUN yarn build
 
