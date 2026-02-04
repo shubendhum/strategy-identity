@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5a5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d8a8a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Shield shape -->
+  <path d="M24 4 L42 12 L42 26 C42 36 33 44 24 48 C15 44 6 36 6 26 L6 12 Z" 
+        fill="url(#logoGrad)"/>
+  
+  <!-- Inner checkmark -->
+  <path d="M17 24 L22 29 L31 18" 
+        stroke="#ffffff" 
+        stroke-width="4" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        fill="none"/>
+</svg>

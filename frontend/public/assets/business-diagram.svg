@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" fill="none">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Central Hub -->
+  <circle cx="400" cy="175" r="60" fill="#1a5a5a"/>
+  <circle cx="400" cy="175" r="45" fill="#2d8a8a"/>
+  <text x="400" y="170" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">Identity</text>
+  <text x="400" y="188" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">Platform</text>
+  
+  <!-- Channel 1 - User Interface -->
+  <rect x="60" y="60" width="150" height="90" rx="10" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="100" cy="95" r="18" fill="#e0f2f1"/>
+  <circle cx="100" cy="90" r="6" fill="#1a5a5a"/>
+  <path d="M88 100 L112 100 C112 108 108 115 100 115 C92 115 88 108 88 100" fill="#1a5a5a"/>
+  <text x="135" y="93" fill="#1e293b" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="600">User</text>
+  <text x="135" y="107" fill="#64748b" font-family="IBM Plex Sans, sans-serif" font-size="10">Interface</text>
+  
+  <!-- Channel 2 - System Integration -->
+  <rect x="590" y="60" width="150" height="90" rx="10" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="630" cy="95" r="18" fill="#e0f2f1"/>
+  <rect x="620" y="85" width="20" height="20" rx="3" fill="none" stroke="#1a5a5a" stroke-width="2"/>
+  <text x="665" y="93" fill="#1e293b" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="600">System</text>
+  <text x="665" y="107" fill="#64748b" font-family="IBM Plex Sans, sans-serif" font-size="10">Integration</text>
+  
+  <!-- Channel 3 - Automation -->
+  <rect x="60" y="200" width="150" height="90" rx="10" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="100" cy="235" r="18" fill="#e0f2f1"/>
+  <path d="M92 235 L108 235 M100 227 L100 243" stroke="#1a5a5a" stroke-width="2" stroke-linecap="round"/>
+  <text x="135" y="233" fill="#1e293b" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="600">Automation</text>
+  <text x="135" y="247" fill="#64748b" font-family="IBM Plex Sans, sans-serif" font-size="10">Pipelines</text>
+  
+  <!-- Channel 4 - Developer -->
+  <rect x="590" y="200" width="150" height="90" rx="10" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="630" cy="235" r="18" fill="#e0f2f1"/>
+  <text x="625" y="240" fill="#1a5a5a" font-family="IBM Plex Mono, monospace" font-size="14" font-weight="700">&lt;/&gt;</text>
+  <text x="665" y="233" fill="#1e293b" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="600">Developer</text>
+  <text x="665" y="247" fill="#64748b" font-family="IBM Plex Sans, sans-serif" font-size="10">Workflows</text>
+  
+  <!-- Connection lines -->
+  <line x1="210" y1="105" x2="345" y2="155" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="590" y1="105" x2="455" y2="155" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="210" y1="245" x2="345" y2="195" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="590" y1="245" x2="455" y2="195" stroke="#cbd5e1" stroke-width="2"/>
+  
+  <!-- Arrow heads -->
+  <polygon points="345,155 335,145 335,155" fill="#cbd5e1"/>
+  <polygon points="455,155 465,145 465,155" fill="#cbd5e1"/>
+  <polygon points="345,195 335,195 335,205" fill="#cbd5e1"/>
+  <polygon points="455,195 465,195 465,205" fill="#cbd5e1"/>
+</svg>

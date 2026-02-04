@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+  <defs>
+    <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5a5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d3d3d;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2d8a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a6666;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background shapes -->
+  <rect x="50" y="50" width="200" height="120" rx="8" fill="#f8fafc" stroke="#1a5a5a" stroke-width="2"/>
+  <rect x="300" y="140" width="200" height="120" rx="8" fill="url(#tealGradient)"/>
+  <rect x="550" y="50" width="200" height="120" rx="8" fill="#f8fafc" stroke="#1a5a5a" stroke-width="2"/>
+  <rect x="300" y="280" width="200" height="80" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="1"/>
+  
+  <!-- Connection lines -->
+  <path d="M250 110 L300 180" stroke="#1a5a5a" stroke-width="2" stroke-dasharray="4,4"/>
+  <path d="M500 200 L550 110" stroke="#1a5a5a" stroke-width="2" stroke-dasharray="4,4"/>
+  <path d="M400 260 L400 280" stroke="#64748b" stroke-width="2"/>
+  
+  <!-- Icons/Symbols -->
+  <circle cx="150" cy="90" r="25" fill="#e0f2f1"/>
+  <path d="M140 85 L160 85 M150 75 L150 95" stroke="#1a5a5a" stroke-width="3" stroke-linecap="round"/>
+  
+  <circle cx="650" cy="90" r="25" fill="#e0f2f1"/>
+  <path d="M640 90 L660 90 M640 80 L660 100 M640 100 L660 80" stroke="#1a5a5a" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Center icon -->
+  <circle cx="400" cy="200" r="30" fill="#ffffff"/>
+  <path d="M385 200 L400 185 L415 200 L400 215 Z" fill="#1a5a5a"/>
+  
+  <!-- Labels -->
+  <text x="150" y="145" text-anchor="middle" fill="#1e293b" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">Applications</text>
+  <text x="400" y="175" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">Identity</text>
+  <text x="400" y="195" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">Platform</text>
+  <text x="650" y="145" text-anchor="middle" fill="#1e293b" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600">Security</text>
+  <text x="400" y="325" text-anchor="middle" fill="#64748b" font-family="IBM Plex Sans, sans-serif" font-size="12">Business Value</text>
+</svg>

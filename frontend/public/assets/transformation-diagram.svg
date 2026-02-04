@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" fill="none">
+  <defs>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a5a5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d8a8a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- FROM Section -->
+  <rect x="40" y="40" width="280" height="220" rx="12" fill="#fef2f2" stroke="#ef4444" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="180" y="75" text-anchor="middle" fill="#dc2626" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="700">FROM</text>
+  
+  <!-- FROM items -->
+  <rect x="60" y="95" width="240" height="36" rx="6" fill="#ffffff" stroke="#fca5a5" stroke-width="1"/>
+  <text x="180" y="118" text-anchor="middle" fill="#7f1d1d" font-family="IBM Plex Sans, sans-serif" font-size="13">Ticket-driven</text>
+  
+  <rect x="60" y="140" width="240" height="36" rx="6" fill="#ffffff" stroke="#fca5a5" stroke-width="1"/>
+  <text x="180" y="163" text-anchor="middle" fill="#7f1d1d" font-family="IBM Plex Sans, sans-serif" font-size="13">Manual and batch-based</text>
+  
+  <rect x="60" y="185" width="240" height="36" rx="6" fill="#ffffff" stroke="#fca5a5" stroke-width="1"/>
+  <text x="180" y="208" text-anchor="middle" fill="#7f1d1d" font-family="IBM Plex Sans, sans-serif" font-size="13">Reactive and review-based</text>
+  
+  <!-- Arrow -->
+  <path d="M340 150 L460 150" stroke="url(#tealGrad)" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="455,140 475,150 455,160" fill="#2d8a8a"/>
+  
+  <!-- TO Section -->
+  <rect x="480" y="40" width="280" height="220" rx="12" fill="#f0fdf4" stroke="#22c55e" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="620" y="75" text-anchor="middle" fill="#15803d" font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="700">TO</text>
+  
+  <!-- TO items -->
+  <rect x="500" y="95" width="240" height="36" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="620" y="118" text-anchor="middle" fill="#14532d" font-family="IBM Plex Sans, sans-serif" font-size="13">Data-driven</text>
+  
+  <rect x="500" y="140" width="240" height="36" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="620" y="163" text-anchor="middle" fill="#14532d" font-family="IBM Plex Sans, sans-serif" font-size="13">Event-based & API-enabled</text>
+  
+  <rect x="500" y="185" width="240" height="36" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+  <text x="620" y="208" text-anchor="middle" fill="#14532d" font-family="IBM Plex Sans, sans-serif" font-size="13">Observable and resilient</text>
+</svg>
