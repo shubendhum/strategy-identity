@@ -8,79 +8,29 @@ A modern, enterprise-focused website presenting the Identity Strategy documentat
 - **Dynamic page rendering** - Add new markdown files without code changes
 - Responsive layout for all screen sizes
 - Local SVG diagrams and icons
-- Docker support for local development
+- Docker support with Macquarie Artifactory
 
-## Adding New Pages
+## Quick Start
 
-To add a new page to the website:
-
-### Step 1: Add your Markdown file
-
-Place your markdown file in `/frontend/src/content/`:
-
-```
-/frontend/src/content/my-new-page.md
-```
-
-### Step 2: Copy to public folder (for development)
-
+### Option 1: Docker Compose (Artifactory)
 ```bash
-cp src/content/my-new-page.md public/content/
+# Login to Artifactory
+docker login artifactory.devtools.syd.c1.macquarie.com:9956
+
+# Build and run
+docker-compose -f docker-compose.artifactory.yml build
+docker-compose -f docker-compose.artifactory.yml up -d
+
+# Access at http://localhost:3000
 ```
 
-### Step 3: Register the page in config
-
-Edit `/frontend/src/config/pages.js` and add your new page:
-
-```javascript
-{
-  id: 'my-new-page',           // URL slug: /pages/my-new-page
-  title: 'My New Page Title',  // Page header title
-  description: 'Description shown in the hero section.',
-  icon: 'FileText',            // Icon from lucide-react (see iconMap)
-  file: 'my-new-page.md',      // Markdown filename
-  navLabel: 'New Page',        // Short label for navigation
-  order: 9,                    // Sort order (lower = earlier)
-  showInNav: true,             // Whether to show in nav menu
-},
-```
-
-### Available Icons
-
-The following icons are available (from lucide-react):
-- `Shield` - Security related
-- `AlertTriangle` - Warnings/Changes
-- `RefreshCcw` - Transformation
-- `Briefcase` - Business
-- `FileText` - Documents
-- `TrendingDown` - Cost/Metrics
-- `Target` - Goals/Success
-- `CheckCircle2` - Completion
-
-To add more icons, update the `iconMap` in `/frontend/src/pages/MarkdownPage.jsx`.
-
-## Pages Included
-
-1. **Overview** (`/`) - Main landing page
-2. **Executive Summary** (`/pages/executive-summary`)
-3. **Why Change** (`/pages/why-change`)
-4. **What Is Changing** (`/pages/what-is-changing`)
-5. **Security Posture** (`/pages/security-posture`)
-6. **Cost Reduction** (`/pages/reduces-cost`)
-7. **Business Experience** (`/pages/business-experience`)
-8. **Success Metrics** (`/pages/success`)
-
-## Local Development
-
-### Running with Docker
-
+### Option 2: Docker Compose (Standard)
 ```bash
 docker-compose up --build
 # Access at http://localhost:3000
 ```
 
-### Running without Docker
-
+### Option 3: Local Development
 ```bash
 cd frontend
 yarn install
@@ -88,48 +38,116 @@ yarn start
 # Access at http://localhost:3000
 ```
 
+## Adding New Pages
+
+### Step 1: Add your Markdown file
+```bash
+# Add to both locations
+cp my-new-page.md frontend/src/content/
+cp my-new-page.md frontend/public/content/
+```
+
+### Step 2: Register in config
+Edit `frontend/src/config/pages.js`:
+```javascript
+{
+  id: 'my-new-page',           // URL: /pages/my-new-page
+  title: 'My Page Title',      // Header title
+  description: 'Page description',
+  icon: 'FileText',            // lucide-react icon
+  file: 'my-new-page.md',      // Markdown filename
+  navLabel: 'My Page',         // Navigation label
+  order: 9,                    // Sort order
+  showInNav: true,
+}
+```
+
+### Available Icons
+`Shield`, `AlertTriangle`, `RefreshCcw`, `Briefcase`, `FileText`, `TrendingDown`, `Target`, `CheckCircle2`
+
+## Pages Included
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Overview | `/` | Main landing page |
+| Executive Summary | `/pages/executive-summary` | High-level strategy overview |
+| Why Change | `/pages/why-change` | Current challenges |
+| What Is Changing | `/pages/what-is-changing` | Transformation approach |
+| Security Posture | `/pages/security-posture` | Security benefits |
+| Cost Reduction | `/pages/reduces-cost` | Cost reduction details |
+| Business Experience | `/pages/business-experience` | Business benefits |
+| Success Metrics | `/pages/success` | Success criteria |
+
 ## Project Structure
 
 ```
-/app
-├── docker-compose.yml
-├── README.md
+/app/
+├── docker-compose.yml                 # Standard Docker Compose
+├── docker-compose.artifactory.yml     # Artifactory Docker Compose
+├── Dockerfile.frontend.artifactory    # Artifactory Dockerfile
+├── ARTIFACTORY_BUILD.md               # Artifactory build guide
+├── k8s/
+│   ├── deployment.artifactory.yaml    # Kubernetes manifests
+│   └── deploy-artifactory.sh          # K8s deployment script
 └── frontend/
-    ├── Dockerfile
-    ├── .npmrc
+    ├── Dockerfile                     # Standard Dockerfile
+    ├── nginx.conf                     # Nginx config for production
+    ├── .npmrc                         # NPM registry config
+    ├── .dockerignore
     ├── public/
-    │   ├── assets/           # SVG diagrams and icons
-    │   └── content/          # Markdown files (copied for serving)
+    │   ├── assets/                    # SVG diagrams and icons
+    │   └── content/                   # Markdown files (served)
     └── src/
         ├── config/
-        │   └── pages.js      # PAGE CONFIGURATION - edit this to add pages
-        ├── content/          # Source markdown files
+        │   └── pages.js               # ⭐ PAGE CONFIG - edit to add pages
+        ├── content/                   # Markdown source files
         ├── components/
         └── pages/
 ```
 
-## Docker Configuration
+## Kubernetes Deployment
 
-Uses Macquarie artifactory:
+```bash
+# Using deployment script
+chmod +x k8s/deploy-artifactory.sh
+./k8s/deploy-artifactory.sh
 
-- **Base Image**: `artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine`
-- **NPM Registry**: `https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual`
+# Or manually
+kubectl create namespace identity-strategy
+kubectl create secret docker-registry artifactory-secret \
+  --docker-server=artifactory.devtools.syd.c1.macquarie.com:9956 \
+  --docker-username=YOUR_USER \
+  --docker-password=YOUR_PASS \
+  -n identity-strategy
+kubectl apply -f k8s/deployment.artifactory.yaml -n identity-strategy
+```
 
-## Markdown Features
+## Artifactory Configuration
 
-The markdown renderer supports:
-- Headings (H1, H2, H3)
-- Paragraphs
-- Bullet lists (with checkmark icons)
-- Numbered lists
-- **Bold text**
-- `Inline code`
-- Code blocks
-- Blockquotes
-- Horizontal rules
+| Setting | Value |
+|---------|-------|
+| Docker Registry | `artifactory.devtools.syd.c1.macquarie.com:9956` |
+| NPM Registry | `artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases` |
+| Base Image | `node:18-alpine` |
+| Production Image | `nginx:alpine` |
 
 ## Design System
 
-- **Primary Color**: Dark Teal (`hsl(180, 45%, 22%)`)
+- **Primary Color**: Dark Teal `hsl(180, 45%, 22%)`
 - **Typography**: IBM Plex Sans / IBM Plex Mono
 - **Components**: Shadcn/UI with custom styling
+
+## Markdown Features
+
+- Headings (H1, H2, H3) with proper styling
+- Bullet lists with checkmark icons
+- **Bold text** highlighting
+- `Inline code` and code blocks
+- Blockquotes
+- Horizontal rules
+
+## Documentation
+
+- `README.md` - This file
+- `ARTIFACTORY_BUILD.md` - Detailed Artifactory build guide
+- `frontend/src/config/pages.js` - Page configuration reference
