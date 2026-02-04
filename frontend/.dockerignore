@@ -1,9 +1,6 @@
-# Exclude only development files, NOT the build folder
+# Exclude only development files
 node_modules
-src
-public
 .git
 .gitignore
 *.md
-yarn.lock
-package.json
+!README.md

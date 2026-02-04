@@ -6,18 +6,14 @@ WORKDIR /app
 # Disable SSL certificate verification for self-signed certificates
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 
-# Configure npm/yarn to use Macquarie artifactory npm-virtual
-# Disable strict SSL for self-signed certificate chain
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
-    npm config set strict-ssl false && \
-    yarn config set strict-ssl false && \
-    yarn config set "strict-ssl" false -g
+# Copy yarn configuration first (uses public npm registry)
+COPY .yarnrc ./
 
-# Copy package files from frontend context (context is ./frontend)
+# Copy package files
 COPY package.json ./
 
-# Install dependencies using yarn (without frozen lockfile for registry compatibility)
-RUN yarn install --network-timeout 600000
+# Install dependencies using yarn with public registry
+RUN yarn install --network-timeout 60000
 
 # Copy source files
 COPY . .
