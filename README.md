@@ -1,122 +1,135 @@
 # Identity Strategy Website
 
-A modern, enterprise-focused website presenting the Identity Strategy documentation.
+A modern, enterprise-focused website presenting the Identity Strategy documentation with dynamic markdown rendering.
 
 ## Features
 
 - Clean enterprise design with dark teal/grey/white color palette
+- **Dynamic page rendering** - Add new markdown files without code changes
 - Responsive layout for all screen sizes
 - Local SVG diagrams and icons
-- Content pages matching provided markdown files
 - Docker support for local development
 
-## Pages
+## Adding New Pages
 
-1. **Overview** (`/`) - Main landing page with strategy overview
-2. **Why Change** (`/why-change`) - Explains the need for transformation
-3. **What Is Changing** (`/what-is-changing`) - Details the transformation approach
-4. **Security Posture** (`/security`) - Security benefits of the strategy
-5. **Business Experience** (`/business`) - Business experience improvements
+To add a new page to the website:
+
+### Step 1: Add your Markdown file
+
+Place your markdown file in `/frontend/src/content/`:
+
+```
+/frontend/src/content/my-new-page.md
+```
+
+### Step 2: Copy to public folder (for development)
+
+```bash
+cp src/content/my-new-page.md public/content/
+```
+
+### Step 3: Register the page in config
+
+Edit `/frontend/src/config/pages.js` and add your new page:
+
+```javascript
+{
+  id: 'my-new-page',           // URL slug: /pages/my-new-page
+  title: 'My New Page Title',  // Page header title
+  description: 'Description shown in the hero section.',
+  icon: 'FileText',            // Icon from lucide-react (see iconMap)
+  file: 'my-new-page.md',      // Markdown filename
+  navLabel: 'New Page',        // Short label for navigation
+  order: 9,                    // Sort order (lower = earlier)
+  showInNav: true,             // Whether to show in nav menu
+},
+```
+
+### Available Icons
+
+The following icons are available (from lucide-react):
+- `Shield` - Security related
+- `AlertTriangle` - Warnings/Changes
+- `RefreshCcw` - Transformation
+- `Briefcase` - Business
+- `FileText` - Documents
+- `TrendingDown` - Cost/Metrics
+- `Target` - Goals/Success
+- `CheckCircle2` - Completion
+
+To add more icons, update the `iconMap` in `/frontend/src/pages/MarkdownPage.jsx`.
+
+## Pages Included
+
+1. **Overview** (`/`) - Main landing page
+2. **Executive Summary** (`/pages/executive-summary`)
+3. **Why Change** (`/pages/why-change`)
+4. **What Is Changing** (`/pages/what-is-changing`)
+5. **Security Posture** (`/pages/security-posture`)
+6. **Cost Reduction** (`/pages/reduces-cost`)
+7. **Business Experience** (`/pages/business-experience`)
+8. **Success Metrics** (`/pages/success`)
 
 ## Local Development
 
-### Prerequisites
-
-- Docker and Docker Compose installed
-- Access to Macquarie artifactory (for npm packages and Docker images)
-
 ### Running with Docker
-
-1. Build and start the container:
 
 ```bash
 docker-compose up --build
+# Access at http://localhost:3000
 ```
-
-2. Access the website at `http://localhost:3000`
 
 ### Running without Docker
 
-If you have Node.js 18+ installed locally:
-
-1. Navigate to the frontend directory:
-
 ```bash
 cd frontend
-```
-
-2. Install dependencies:
-
-```bash
 yarn install
-```
-
-3. Start the development server:
-
-```bash
 yarn start
+# Access at http://localhost:3000
 ```
-
-4. Access the website at `http://localhost:3000`
 
 ## Project Structure
 
 ```
 /app
-├── docker-compose.yml          # Docker Compose configuration
-├── frontend/
-│   ├── Dockerfile              # Docker build configuration
-│   ├── .npmrc                  # NPM registry configuration
-│   ├── public/
-│   │   └── assets/             # Local SVG diagrams and icons
-│   │       ├── logo.svg
-│   │       ├── hero-diagram.svg
-│   │       ├── transformation-diagram.svg
-│   │       ├── security-diagram.svg
-│   │       ├── business-diagram.svg
-│   │       └── icon-*.svg
-│   └── src/
-│       ├── components/         # React components
-│       ├── content/            # Markdown content files
-│       └── pages/              # Page components
+├── docker-compose.yml
+├── README.md
+└── frontend/
+    ├── Dockerfile
+    ├── .npmrc
+    ├── public/
+    │   ├── assets/           # SVG diagrams and icons
+    │   └── content/          # Markdown files (copied for serving)
+    └── src/
+        ├── config/
+        │   └── pages.js      # PAGE CONFIGURATION - edit this to add pages
+        ├── content/          # Source markdown files
+        ├── components/
+        └── pages/
 ```
-
-## Content Files
-
-The markdown content files are located in `/frontend/src/content/`:
-
-- `index.md` - Overview content
-- `why-change.md` - Why change documentation
-- `what-is-changing.md` - What is changing documentation
-- `security-posture.md` - Security posture documentation
-- `business-experience.md` - Business experience documentation
-
-## Environment Variables
-
-The application uses the following environment variables:
-
-- `NODE_ENV` - Set to `production` for production builds
-- `REACT_APP_BACKEND_URL` - Backend API URL (optional, for future API integration)
 
 ## Docker Configuration
 
-The Dockerfile uses Macquarie artifactory for both the base image and npm packages:
+Uses Macquarie artifactory:
 
 - **Base Image**: `artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine`
 - **NPM Registry**: `https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual`
 
+## Markdown Features
+
+The markdown renderer supports:
+- Headings (H1, H2, H3)
+- Paragraphs
+- Bullet lists (with checkmark icons)
+- Numbered lists
+- **Bold text**
+- `Inline code`
+- Code blocks
+- Blockquotes
+- Horizontal rules
+
 ## Design System
 
-The website uses a custom design system with:
-
 - **Primary Color**: Dark Teal (`hsl(180, 45%, 22%)`)
-- **Background**: Light grey/white
-- **Typography**: IBM Plex Sans (headings and body), IBM Plex Mono (code)
-- **Components**: Shadcn/UI primitives with custom styling
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- **Typography**: IBM Plex Sans / IBM Plex Mono
+- **Components**: Shadcn/UI with custom styling
