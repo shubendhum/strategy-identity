@@ -7,12 +7,12 @@ services:
       dockerfile: ../Dockerfile.frontend.artifactory
     image: artifactory.devtools.syd.c1.macquarie.com:9956/identity-strategy:latest
     ports:
-      - "3000:80"
+      - "3003:80"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 10s
       retries: 3
