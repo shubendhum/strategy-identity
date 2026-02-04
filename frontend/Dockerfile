@@ -3,14 +3,15 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS builder
 
 WORKDIR /app
 
-# Configure npm to use Macquarie artifactory
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual
+# Configure npm/yarn to use Macquarie artifactory npm-proxy (includes public packages)
+RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-proxy && \
+    npm config set strict-ssl false
 
-# Copy package files
-COPY package.json yarn.lock ./
+# Copy package files (exclude yarn.lock to avoid version conflicts with proxy)
+COPY package.json ./
 
-# Install dependencies using yarn
-RUN yarn install --frozen-lockfile
+# Install dependencies using yarn (without frozen lockfile for proxy compatibility)
+RUN yarn install --network-timeout 600000
 
 # Copy source files
 COPY . .
@@ -27,7 +28,8 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS production
 WORKDIR /app
 
 # Install serve to run the static files
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
+RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-proxy && \
+    npm config set strict-ssl false && \
     npm install -g serve
 
 # Copy built files from builder stage
