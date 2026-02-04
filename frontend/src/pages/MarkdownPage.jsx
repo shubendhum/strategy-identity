@@ -8,7 +8,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { pagesConfig, getPageById, getAllPages } from '@/config/pages';
+import { getPageById, getAllPages } from '@/config/pages';
 import { 
   Shield, 
   AlertTriangle, 
@@ -109,26 +109,17 @@ const MarkdownPage = () => {
     const loadContent = async () => {
       try {
         setLoading(true);
-        // Dynamic import of markdown file
+        // Fetch markdown file from public/content directory
         const response = await fetch(`/content/${pageConfig.file}`);
         if (!response.ok) {
-          // Try importing from src/content as module
-          const module = await import(`@/content/${pageConfig.file}`);
-          setContent(module.default || '');
-        } else {
-          const text = await response.text();
-          setContent(text);
+          throw new Error(`Failed to load: ${pageConfig.file}`);
         }
+        const text = await response.text();
+        setContent(text);
         setError(null);
       } catch (err) {
-        // Fallback: try to load raw content
-        try {
-          const rawModule = await import(`!!raw-loader!@/content/${pageConfig.file}`);
-          setContent(rawModule.default);
-          setError(null);
-        } catch {
-          setError(`Could not load content for: ${pageConfig.file}`);
-        }
+        console.error('Error loading content:', err);
+        setError(`Could not load content for: ${pageConfig.file}`);
       } finally {
         setLoading(false);
       }
