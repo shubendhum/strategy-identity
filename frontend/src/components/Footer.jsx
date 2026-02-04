@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const footerLinks = [
-  { label: 'Overview', href: '/' },
-  { label: 'Why Change', href: '/why-change' },
-  { label: 'What Is Changing', href: '/what-is-changing' },
-  { label: 'Security Posture', href: '/security' },
-  { label: 'Business Experience', href: '/business' },
-];
+import { getNavItems } from '@/config/pages';
 
 export const Footer = () => {
+  const navItems = getNavItems();
+
   return (
     <footer className="border-t border-border bg-muted/30">
       <div className="container mx-auto px-6 lg:px-8 py-12">
@@ -36,7 +31,7 @@ export const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold text-foreground mb-4">Quick Links</h4>
             <nav className="flex flex-col gap-2">
-              {footerLinks.map((link) => (
+              {navItems.slice(0, 6).map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
