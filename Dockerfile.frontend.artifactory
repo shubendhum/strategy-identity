@@ -3,17 +3,19 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS builder
 
 WORKDIR /app
 
-# Disable SSL certificate verification for self-signed certificates
+# Disable SSL certificate verification
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 
-# Copy yarn configuration first (uses public npm registry)
-COPY .yarnrc ./
+# Configure yarn to use public npm registry
+RUN yarn config set registry https://registry.npmjs.org/ && \
+    yarn config set strict-ssl false && \
+    yarn config set network-timeout 60000
 
 # Copy package files
 COPY package.json ./
 
-# Install dependencies using yarn with public registry
-RUN yarn install --network-timeout 60000
+# Install dependencies
+RUN yarn install
 
 # Copy source files
 COPY . .
@@ -24,13 +26,13 @@ RUN mkdir -p public/content && cp src/content/*.md public/content/
 # Build the application
 RUN yarn build
 
-# Production stage - use nginx (no npm install needed)
+# Production stage - use nginx
 FROM artifactory.devtools.syd.c1.macquarie.com:9956/nginx:alpine AS production
 
 # Copy built files from builder stage
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Copy nginx configuration from builder (since context is ./frontend)
+# Copy nginx configuration
 COPY --from=builder /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
