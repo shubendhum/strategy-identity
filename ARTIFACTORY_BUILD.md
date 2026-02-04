@@ -207,10 +207,10 @@ ls -la frontend/
 ```
 
 ### Issue: npm packages not found (404)
-**Cause**: Packages not in npm-releases repository
+**Cause**: Packages not in npm-virtual repository
 **Solution**: Try different npm repository
 ```bash
-# In Dockerfile, try npm-proxy or npm-all:
+# In Dockerfile, try npm-proxy or npm-releases:
 RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-proxy
 ```
 
@@ -242,7 +242,7 @@ kubectl create secret docker-registry artifactory-secret \
 | Setting | Value |
 |---------|-------|
 | Docker Registry | `artifactory.devtools.syd.c1.macquarie.com:9956` |
-| NPM Registry | `artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases` |
+| NPM Registry | `artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual` |
 | Base Image | `node:18-alpine` |
 | Production Image | `nginx:alpine` |
 | Build Context | `./frontend` |

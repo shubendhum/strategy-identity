@@ -3,8 +3,8 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS builder
 
 WORKDIR /app
 
-# Configure npm/yarn to use Macquarie artifactory npm-releases
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases && \
+# Configure npm/yarn to use Macquarie artifactory npm-virtual
+RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
     npm config set strict-ssl false
 
 # Copy package files (exclude yarn.lock to avoid version conflicts with proxy)
