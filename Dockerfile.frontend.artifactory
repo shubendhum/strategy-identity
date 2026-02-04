@@ -3,9 +3,15 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS builder
 
 WORKDIR /app
 
+# Disable SSL certificate verification for self-signed certificates
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+
 # Configure npm/yarn to use Macquarie artifactory npm-virtual
+# Disable strict SSL for self-signed certificate chain
 RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
-    npm config set strict-ssl false
+    npm config set strict-ssl false && \
+    yarn config set strict-ssl false && \
+    yarn config set "strict-ssl" false -g
 
 # Copy package files from frontend context (context is ./frontend)
 COPY package.json ./

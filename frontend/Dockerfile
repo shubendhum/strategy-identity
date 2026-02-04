@@ -3,14 +3,20 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS builder
 
 WORKDIR /app
 
+# Disable SSL certificate verification for self-signed certificates
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+
 # Configure npm/yarn to use Macquarie artifactory npm-virtual
+# Disable strict SSL for self-signed certificate chain
 RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
-    npm config set strict-ssl false
+    npm config set strict-ssl false && \
+    yarn config set strict-ssl false && \
+    yarn config set "strict-ssl" false -g
 
 # Copy package files (exclude yarn.lock to avoid version conflicts with proxy)
 COPY package.json ./
 
-# Install dependencies using yarn (without frozen lockfile for proxy compatibility)
+# Install dependencies using yarn (without frozen lockfile for registry compatibility)
 RUN yarn install --network-timeout 600000
 
 # Copy source files
@@ -28,7 +34,7 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS production
 WORKDIR /app
 
 # Install serve to run the static files
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases && \
+RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
     npm config set strict-ssl false && \
     npm install -g serve
 
