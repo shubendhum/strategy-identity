@@ -1,8 +1,9 @@
-# Exclude yarn.lock from Docker build to avoid registry conflicts
-yarn.lock
+# Exclude only development files, NOT the build folder
 node_modules
-build
+src
+public
 .git
 .gitignore
 *.md
-!README.md
+yarn.lock
+package.json
