@@ -3,8 +3,8 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS builder
 
 WORKDIR /app
 
-# Configure npm/yarn to use Macquarie artifactory npm-proxy (includes public packages)
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-proxy && \
+# Configure npm/yarn to use Macquarie artifactory npm-releases
+RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases && \
     npm config set strict-ssl false
 
 # Copy package files (exclude yarn.lock to avoid version conflicts with proxy)
@@ -28,7 +28,7 @@ FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS production
 WORKDIR /app
 
 # Install serve to run the static files
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-proxy && \
+RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-releases && \
     npm config set strict-ssl false && \
     npm install -g serve
 
