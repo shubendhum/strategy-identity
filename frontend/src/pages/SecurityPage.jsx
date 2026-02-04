@@ -157,7 +157,7 @@ const SecurityPage = () => {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/what-is-changing">Back to What's Changing</Link>
+                <Link to="/what-is-changing">Back to What&apos;s Changing</Link>
               </Button>
             </div>
           </div>

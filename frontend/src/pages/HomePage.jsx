@@ -126,7 +126,7 @@ const HomePage = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-2">What Is Changing</h3>
                 <p className="text-muted-foreground mb-6 flex-1">
-                  See how we're repositioning identity from back-office to business enabler.
+                  See how we&apos;re repositioning identity from back-office to business enabler.
                 </p>
                 <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <Link to="/what-is-changing" className="flex items-center gap-2">

@@ -163,7 +163,7 @@ const WhyChangePage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
                 <Link to="/what-is-changing" className="flex items-center gap-2">
-                  See What's Changing <ArrowRight className="w-4 h-4" />
+                  See What&apos;s Changing <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
