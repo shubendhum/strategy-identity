@@ -28,7 +28,7 @@ RUN mkdir -p public/content && cp src/content/*.md public/content/
 # Build the application
 RUN yarn build
 
-# Production stage - use nginx for better performance
+# Production stage - use nginx (no npm install needed)
 FROM artifactory.devtools.syd.c1.macquarie.com:9956/nginx:alpine AS production
 
 # Copy built files from builder stage

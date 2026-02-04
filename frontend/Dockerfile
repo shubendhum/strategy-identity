@@ -13,7 +13,7 @@ RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:99
     yarn config set strict-ssl false && \
     yarn config set "strict-ssl" false -g
 
-# Copy package files (exclude yarn.lock to avoid version conflicts with proxy)
+# Copy package files
 COPY package.json ./
 
 # Install dependencies using yarn (without frozen lockfile for registry compatibility)
@@ -28,21 +28,17 @@ RUN mkdir -p public/content && cp src/content/*.md public/content/
 # Build the application
 RUN yarn build
 
-# Production stage
-FROM artifactory.devtools.syd.c1.macquarie.com:9956/node:18-alpine AS production
-
-WORKDIR /app
-
-# Install serve to run the static files
-RUN npm config set registry https://artifactory.devtools.syd.c1.macquarie.com:9996/npm-virtual && \
-    npm config set strict-ssl false && \
-    npm install -g serve
+# Production stage - use nginx (no npm install needed)
+FROM artifactory.devtools.syd.c1.macquarie.com:9956/nginx:alpine AS production
 
 # Copy built files from builder stage
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/build /usr/share/nginx/html
 
-# Expose port 3000
-EXPOSE 3000
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Start the server
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Expose port 80
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
